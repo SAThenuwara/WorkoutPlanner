@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct WorkoutPlannerApp: App {
+    @StateObject private var viewModel = WorkoutViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            PlanWorkoutView()
+                            .environmentObject(viewModel)
         }
     }
 }

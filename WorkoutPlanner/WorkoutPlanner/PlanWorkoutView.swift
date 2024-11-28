@@ -1,183 +1,148 @@
 import SwiftUI
 
 struct PlanWorkoutView: View {
-    @State private var exerciseName: String = ""
-    @State private var sets: Int = 1
-    @State private var reps: Int = 1
-    @State private var weight: Int = 0
-    @State private var workoutList: [String] = []
-    
-    // State for saving workout
-    @State private var showSaveAlert: Bool = false
-    @State private var workoutName: String = ""
-    @State private var navigateToSavedWorkout: Bool = false
+    @ObservedObject var viewModel = WorkoutViewModel()
+    @State private var workoutName = ""
+    @State private var selectedDay = "Monday"
+    @State private var exerciseName = ""
+    @State private var sets = 1
+    @State private var reps = 1
+    @State private var weight = 0
+    @State private var exercises: [Exercise] = []
+    @State private var showSavedWorkouts = false
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                // Title
-                Text("Plan Your Workout")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .padding(.top)
-
-                // Input for Exercise Name
-                TextField("Exercise Name", text: $exerciseName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-
-                // Sets Input
-                HStack {
-                    Text("Sets:")
-                    Spacer()
-                    Stepper(value: $sets, in: 1...10) {
-                        Text("\(sets)")
-                    }
-                }
-                .padding(.horizontal)
-
-                // Reps Input
-                HStack {
-                    Text("Reps:")
-                    Spacer()
-                    Stepper(value: $reps, in: 1...20) {
-                        Text("\(reps)")
-                    }
-                }
-                .padding(.horizontal)
-
-                // Weight Input
-                HStack {
-                    Text("Weight (kg):")
-                    Spacer()
-                    Stepper(value: $weight, in: 0...200, step: 5) {
-                        Text("\(weight) kg")
-                    }
-                }
-                .padding(.horizontal)
-
-                // Add Exercise Button
-                Button(action: addExercise) {
-                    Text("Add Exercise")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal)
-
-                // Workout List with Reorder
-                List {
-                    ForEach(workoutList.indices, id: \.self) { index in
-                        HStack {
-                            Text(workoutList[index])
-                                .lineLimit(1)
-                                .truncationMode(.tail)
-
-                            Spacer()
-
-                            // X Button for Deletion
-                            Button(action: {
-                                deleteExercise(at: index)
-                            }) {
-                                Image(systemName: "xmark.circle")
-                                    .foregroundColor(.red)
+            VStack {
+                Form {
+                    // Section for workout details
+                    Section(header: Text("Workout Details")) {
+                        TextField("Workout Name", text: $workoutName)
+                        Picker("Day", selection: $selectedDay) {
+                            ForEach(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], id: \.self) { day in
+                                Text(day)
                             }
                         }
                     }
-                    .onMove(perform: moveExercise)
-                }
-                .listStyle(PlainListStyle())
-                .toolbar {
-                    EditButton()
+
+                    // Section for adding exercises
+                    Section(header: Text("Add Exercise")) {
+                        TextField("Exercise Name", text: $exerciseName)
+                        Stepper("Sets: \(sets)", value: $sets, in: 1...10)
+                        Stepper("Reps: \(reps)", value: $reps, in: 1...20)
+                        Stepper("Weight: \(weight) kg", value: $weight, in: 0...200, step: 5)
+
+                        Button("Add Exercise") {
+                            addExercise()
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(exerciseName.isEmpty)
+                    }
+
+                    // Section displaying added exercises
+                    Section(header: Text("Exercises")) {
+                        if exercises.isEmpty {
+                            Text("No exercises added").foregroundColor(.gray)
+                        } else {
+                            ForEach(exercises) { exercise in
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(exercise.name).bold()
+                                        Text("\(exercise.sets) sets x \(exercise.reps) reps (\(exercise.weight) kg)")
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                            }
+                            .onDelete(perform: deleteExercise)
+                        }
+                    }
                 }
 
-                // Save Workout Button
-                Button(action: {
-                    showSaveAlert = true
-                }) {
-                    Text("Save Workout")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal)
-                .alert("Save Workout", isPresented: $showSaveAlert, actions: {
-                    TextField("Enter Workout Name", text: $workoutName)
-                    Button("Save", action: saveWorkout)
-                    Button("Cancel", role: .cancel, action: {})
-                }, message: {
-                    Text("Enter a name for this workout.")
-                })
+                // Save and View buttons
+                HStack {
+                    Button("Save Workout") {
+                        saveWorkout()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(workoutName.isEmpty || exercises.isEmpty)
+                    .padding()
 
-                // Navigation Link to Saved Workout Page
-                NavigationLink(destination: SavedWorkoutView(workoutName: workoutName, workoutList: workoutList),
-                               isActive: $navigateToSavedWorkout) {
-                    EmptyView()
+                    Button("View Saved Workouts") {
+                        showSavedWorkouts.toggle()
+                    }
+                    .buttonStyle(.bordered)
+                    .padding()
+                    .sheet(isPresented: $showSavedWorkouts) {
+                        SavedWorkoutView(viewModel: viewModel)
+                    }
                 }
-
-                Spacer()
             }
-            .padding()
             .navigationTitle("Plan Workout")
+            .navigationBarItems(trailing: EditButton()) // Enable deletion of exercises
         }
     }
 
-    // Function to add an exercise
+    // MARK: - Helper Methods
+
     private func addExercise() {
-        guard !exerciseName.isEmpty else { return }
-        let exercise = "\(exerciseName) - \(sets) sets x \(reps) reps @ \(weight) kg"
-        workoutList.append(exercise)
+        let newExercise = Exercise(name: exerciseName, sets: sets, reps: reps, weight: weight)
+        exercises.append(newExercise)
+        clearExerciseFields()
+    }
+
+    private func deleteExercise(at offsets: IndexSet) {
+        exercises.remove(atOffsets: offsets)
+    }
+
+    private func saveWorkout() {
+        viewModel.addWorkout(name: workoutName, exercises: exercises, day: selectedDay)
+        clearWorkoutFields()
+    }
+
+    private func clearExerciseFields() {
         exerciseName = ""
         sets = 1
         reps = 1
         weight = 0
     }
 
-    // Function to delete an exercise
-    private func deleteExercise(at index: Int) {
-        workoutList.remove(at: index)
-    }
-
-    // Function to reorder exercises
-    private func moveExercise(from source: IndexSet, to destination: Int) {
-        workoutList.move(fromOffsets: source, toOffset: destination)
-    }
-
-    // Function to save the workout
-    private func saveWorkout() {
-        guard !workoutName.isEmpty else { return }
-        navigateToSavedWorkout = true
+    private func clearWorkoutFields() {
+        workoutName = ""
+        exercises.removeAll()
     }
 }
 
-struct SavedWorkoutView: View {
-    let workoutName: String
-    let workoutList: [String]
-
-    var body: some View {
-        VStack(spacing: 20) {
-            Text(workoutName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.top)
-
-            List(workoutList, id: \.self) { exercise in
-                Text(exercise)
-            }
-
-            Spacer()
-        }
-        .padding()
-        .navigationTitle("Saved Workout")
-    }
-}
+// MARK: - Preview
 
 struct PlanWorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        PlanWorkoutView()
+        PlanWorkoutView(viewModel: WorkoutViewModel())
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

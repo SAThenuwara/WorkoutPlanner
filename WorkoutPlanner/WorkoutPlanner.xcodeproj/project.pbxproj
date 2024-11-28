@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		758C7AD92CF888EB0001F524 /* WorkoutTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758C7AD82CF888EB0001F524 /* WorkoutTimerView.swift */; };
+		758C7ADB2CF8895D0001F524 /* WorkoutTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758C7ADA2CF8895D0001F524 /* WorkoutTimerViewModel.swift */; };
+		75BE4E512CF8368B006EC1DE /* SavedWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BE4E502CF8368B006EC1DE /* SavedWorkoutView.swift */; };
+		75BE4E532CF837CD006EC1DE /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BE4E522CF837CD006EC1DE /* WorkoutViewModel.swift */; };
+		75BE4E572CF83D3B006EC1DE /* EditExerciseSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BE4E562CF83D3B006EC1DE /* EditExerciseSheet.swift */; };
 		F15084E02CEE015A008E1694 /* WorkoutPlannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15084DF2CEE015A008E1694 /* WorkoutPlannerApp.swift */; };
 		F15084E22CEE015A008E1694 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15084E12CEE015A008E1694 /* ContentView.swift */; };
 		F15084E42CEE015B008E1694 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F15084E32CEE015B008E1694 /* Assets.xcassets */; };
@@ -36,6 +41,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		758C7AD82CF888EB0001F524 /* WorkoutTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTimerView.swift; sourceTree = "<group>"; };
+		758C7ADA2CF8895D0001F524 /* WorkoutTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTimerViewModel.swift; sourceTree = "<group>"; };
+		75BE4E502CF8368B006EC1DE /* SavedWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedWorkoutView.swift; sourceTree = "<group>"; };
+		75BE4E522CF837CD006EC1DE /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
+		75BE4E562CF83D3B006EC1DE /* EditExerciseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseSheet.swift; sourceTree = "<group>"; };
 		F15084DC2CEE015A008E1694 /* WorkoutPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F15084DF2CEE015A008E1694 /* WorkoutPlannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPlannerApp.swift; sourceTree = "<group>"; };
 		F15084E12CEE015A008E1694 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +114,11 @@
 				F15084E52CEE015B008E1694 /* Preview Content */,
 				F15085092CEE01B1008E1694 /* HomePageView.swift */,
 				F150850B2CEE01DA008E1694 /* PlanWorkoutView.swift */,
+				75BE4E502CF8368B006EC1DE /* SavedWorkoutView.swift */,
+				75BE4E522CF837CD006EC1DE /* WorkoutViewModel.swift */,
+				75BE4E562CF83D3B006EC1DE /* EditExerciseSheet.swift */,
+				758C7AD82CF888EB0001F524 /* WorkoutTimerView.swift */,
+				758C7ADA2CF8895D0001F524 /* WorkoutTimerViewModel.swift */,
 			);
 			path = WorkoutPlanner;
 			sourceTree = "<group>";
@@ -263,9 +278,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				758C7AD92CF888EB0001F524 /* WorkoutTimerView.swift in Sources */,
 				F15084E22CEE015A008E1694 /* ContentView.swift in Sources */,
+				758C7ADB2CF8895D0001F524 /* WorkoutTimerViewModel.swift in Sources */,
+				75BE4E572CF83D3B006EC1DE /* EditExerciseSheet.swift in Sources */,
 				F150850C2CEE01DA008E1694 /* PlanWorkoutView.swift in Sources */,
 				F150850A2CEE01B1008E1694 /* HomePageView.swift in Sources */,
+				75BE4E512CF8368B006EC1DE /* SavedWorkoutView.swift in Sources */,
+				75BE4E532CF837CD006EC1DE /* WorkoutViewModel.swift in Sources */,
 				F15084E02CEE015A008E1694 /* WorkoutPlannerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
