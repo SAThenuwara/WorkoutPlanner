@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		758C7AD92CF888EB0001F524 /* WorkoutTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758C7AD82CF888EB0001F524 /* WorkoutTimerView.swift */; };
 		758C7ADB2CF8895D0001F524 /* WorkoutTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758C7ADA2CF8895D0001F524 /* WorkoutTimerViewModel.swift */; };
+		759AF1832CF97F8A00810966 /* TimeCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759AF1822CF97F8A00810966 /* TimeCircleView.swift */; };
+		759AF1852CF9826A00810966 /* JoggingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759AF1842CF9826A00810966 /* JoggingView.swift */; };
+		759AF1872CF984C800810966 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759AF1862CF984C800810966 /* SplashScreenView.swift */; };
+		759AF1892CF98FAD00810966 /* deadlifts.png in Resources */ = {isa = PBXBuildFile; fileRef = 759AF1882CF98FAD00810966 /* deadlifts.png */; };
 		75BE4E512CF8368B006EC1DE /* SavedWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BE4E502CF8368B006EC1DE /* SavedWorkoutView.swift */; };
 		75BE4E532CF837CD006EC1DE /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BE4E522CF837CD006EC1DE /* WorkoutViewModel.swift */; };
 		75BE4E572CF83D3B006EC1DE /* EditExerciseSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BE4E562CF83D3B006EC1DE /* EditExerciseSheet.swift */; };
@@ -43,6 +47,10 @@
 /* Begin PBXFileReference section */
 		758C7AD82CF888EB0001F524 /* WorkoutTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTimerView.swift; sourceTree = "<group>"; };
 		758C7ADA2CF8895D0001F524 /* WorkoutTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTimerViewModel.swift; sourceTree = "<group>"; };
+		759AF1822CF97F8A00810966 /* TimeCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCircleView.swift; sourceTree = "<group>"; };
+		759AF1842CF9826A00810966 /* JoggingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoggingView.swift; sourceTree = "<group>"; };
+		759AF1862CF984C800810966 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		759AF1882CF98FAD00810966 /* deadlifts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = deadlifts.png; path = ../../../deadlifts.png; sourceTree = "<group>"; };
 		75BE4E502CF8368B006EC1DE /* SavedWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedWorkoutView.swift; sourceTree = "<group>"; };
 		75BE4E522CF837CD006EC1DE /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
 		75BE4E562CF83D3B006EC1DE /* EditExerciseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseSheet.swift; sourceTree = "<group>"; };
@@ -111,7 +119,9 @@
 				F15084DF2CEE015A008E1694 /* WorkoutPlannerApp.swift */,
 				F15084E12CEE015A008E1694 /* ContentView.swift */,
 				F15084E32CEE015B008E1694 /* Assets.xcassets */,
+				759AF1882CF98FAD00810966 /* deadlifts.png */,
 				F15084E52CEE015B008E1694 /* Preview Content */,
+				759AF1862CF984C800810966 /* SplashScreenView.swift */,
 				F15085092CEE01B1008E1694 /* HomePageView.swift */,
 				F150850B2CEE01DA008E1694 /* PlanWorkoutView.swift */,
 				75BE4E502CF8368B006EC1DE /* SavedWorkoutView.swift */,
@@ -119,6 +129,8 @@
 				75BE4E562CF83D3B006EC1DE /* EditExerciseSheet.swift */,
 				758C7AD82CF888EB0001F524 /* WorkoutTimerView.swift */,
 				758C7ADA2CF8895D0001F524 /* WorkoutTimerViewModel.swift */,
+				759AF1822CF97F8A00810966 /* TimeCircleView.swift */,
+				759AF1842CF9826A00810966 /* JoggingView.swift */,
 			);
 			path = WorkoutPlanner;
 			sourceTree = "<group>";
@@ -253,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F15084E72CEE015B008E1694 /* Preview Assets.xcassets in Resources */,
+				759AF1892CF98FAD00810966 /* deadlifts.png in Resources */,
 				F15084E42CEE015B008E1694 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,14 +292,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				758C7AD92CF888EB0001F524 /* WorkoutTimerView.swift in Sources */,
+				759AF1852CF9826A00810966 /* JoggingView.swift in Sources */,
 				F15084E22CEE015A008E1694 /* ContentView.swift in Sources */,
 				758C7ADB2CF8895D0001F524 /* WorkoutTimerViewModel.swift in Sources */,
 				75BE4E572CF83D3B006EC1DE /* EditExerciseSheet.swift in Sources */,
 				F150850C2CEE01DA008E1694 /* PlanWorkoutView.swift in Sources */,
 				F150850A2CEE01B1008E1694 /* HomePageView.swift in Sources */,
+				759AF1832CF97F8A00810966 /* TimeCircleView.swift in Sources */,
 				75BE4E512CF8368B006EC1DE /* SavedWorkoutView.swift in Sources */,
 				75BE4E532CF837CD006EC1DE /* WorkoutViewModel.swift in Sources */,
 				F15084E02CEE015A008E1694 /* WorkoutPlannerApp.swift in Sources */,
+				759AF1872CF984C800810966 /* SplashScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

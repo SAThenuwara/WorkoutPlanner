@@ -12,6 +12,8 @@ struct PlanWorkoutView: View {
     @State private var showSavedWorkouts = false
 
     var body: some View {
+        
+        
         NavigationView {
             VStack {
                 Form {

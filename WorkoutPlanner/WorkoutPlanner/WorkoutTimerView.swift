@@ -1,45 +1,71 @@
 import SwiftUI
+import Combine
 
 struct WorkoutTimerView: View {
     @ObservedObject var timerViewModel: WorkoutTimerViewModel
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Workout Timer")
-                .font(.title)
-                .padding()
-
+        VStack(spacing: 40) {
             // Workout Timer
-            Text("Workout Time Remaining: \(timerViewModel.workoutTimeRemaining) seconds")
-                .font(.headline)
-
-            Button(timerViewModel.isWorkoutTimerActive ? "Pause Timer" : "Start Timer") {
-                if timerViewModel.isWorkoutTimerActive {
-                    timerViewModel.pauseTimer()
-                } else {
-                    timerViewModel.startWorkoutTimer()
-                }
-            }
-            .padding()
-            .background(timerViewModel.isWorkoutTimerActive ? Color.red : Color.green)
-            .foregroundColor(.white)
-            .cornerRadius(10)
+            TimerCircle(
+                timeRemaining: timerViewModel.workoutTimeRemaining,
+                totalTime: 60,
+                label: "Workout"
+            )
 
             // Rest Timer
-            if timerViewModel.isRestTimerActive {
-                Text("Rest Time Remaining: \(timerViewModel.restTimeRemaining) seconds")
-                    .font(.headline)
-            }
+            TimerCircle(
+                timeRemaining: timerViewModel.restTimeRemaining,
+                totalTime: 30,
+                label: "Rest"
+            )
 
-            Spacer()
+            HStack {
+                // Start Workout Button
+                Button(action: {
+                    timerViewModel.startWorkoutTimer()
+                }) {
+                    Text("Start Workout")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .disabled(timerViewModel.isWorkoutTimerActive || timerViewModel.isRestTimerActive)
+                
+                // Pause Button
+                Button(action: {
+                    timerViewModel.pauseTimer()
+                }) {
+                    Text("Pause")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.orange)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                
+                // Reset Button
+                Button(action: {
+                    timerViewModel.resetWorkoutTimer()
+                }) {
+                    Text("Reset")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+            }
+            .padding(.horizontal)
         }
         .padding()
-        .navigationTitle("Workout Timer")
     }
 }
 
 struct WorkoutTimerView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutTimerView(timerViewModel: WorkoutTimerViewModel())
+        WorkoutTimerView(timerViewModel: WorkoutTimerViewModel()) // Add the model instance
     }
 }

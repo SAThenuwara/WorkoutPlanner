@@ -12,7 +12,7 @@ class WorkoutTimerViewModel: ObservableObject {
     // Start the workout timer
     func startWorkoutTimer() {
         isWorkoutTimerActive = true
-        startTimer(duration: $workoutTimeRemaining) {
+        startTimer(durationKeyPath: \.workoutTimeRemaining) {
             self.isWorkoutTimerActive = false
             self.startRestTimer() // Automatically start rest timer after workout
         }
@@ -21,19 +21,19 @@ class WorkoutTimerViewModel: ObservableObject {
     // Start the rest timer
     func startRestTimer() {
         isRestTimerActive = true
-        startTimer(duration: $restTimeRemaining) {
+        startTimer(durationKeyPath: \.restTimeRemaining) {
             self.isRestTimerActive = false
         }
     }
 
     // Start a generic timer for a given duration
-    private func startTimer(duration: Binding<Int>, completion: @escaping () -> Void) {
+    private func startTimer(durationKeyPath: ReferenceWritableKeyPath<WorkoutTimerViewModel, Int>, completion: @escaping () -> Void) {
         timer?.cancel() // Cancel any previous timer
         timer = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
-                if duration.wrappedValue > 0 {
-                    duration.wrappedValue -= 1
+                if self[keyPath: durationKeyPath] > 0 {
+                    self[keyPath: durationKeyPath] -= 1
                 } else {
                     self.timer?.cancel()
                     completion()
